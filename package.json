@@ -1,0 +1,14 @@
+{
+  "name": "testcafe",
+  "scripts": {
+    "server": "node server/app.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

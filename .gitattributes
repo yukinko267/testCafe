@@ -1,0 +1,6 @@
+# ソースコードはLFに統一する（推奨）
+* text=auto eol=lf
+
+# バイナリは無視
+*.png binary
+*.jpg binary
