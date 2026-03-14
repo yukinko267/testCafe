@@ -1,4 +1,6 @@
 const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
 const app = express();
 
 // CORS対応
@@ -23,7 +25,7 @@ app.get('/api/hotpepper', async (req, res) => {
       key: '52b91f15b1d55058',
       large_area: 'Z063',
       range: '5',
-      count: '50',
+      count: '100',
       genre: 'G014',
       format: 'json',
     });
@@ -41,6 +43,37 @@ app.get('/api/hotpepper', async (req, res) => {
   }
 });
 
+// メニュースクレイピング用エンドポイント
+app.get('/api/scrape-menu', async (req, res) => {
+  try {
+    const { url } = req.query;
+    if (!url) {
+      return res.status(400).json({ error: 'URL is required' });
+    }
+
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+    const menuItems = [];
+
+    // メニュー情報の抽出（実際のHTML構造に応じて調整が必要）
+    $('.menu-item').each((i, element) => {
+      const name = $(element).find('.menu-name').text().trim();
+      const price = $(element).find('.menu-price').text().trim().replace(/[^\d]/g, '');
+      
+      if (name) {
+        menuItems.push({
+          name,
+          price: price || null
+        });
+      }
+    });
+
+    res.json(menuItems);
+  } catch (error) {
+    console.error('Scraping error:', error);
+    res.status(500).json({ error: 'Failed to scrape menu' });
+  }
+});
 
 app.listen(5000, () => {
   console.log('Server running on port 5000');

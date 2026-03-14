@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ShopCard = ({ shop }) => (
+const ShopCard = ({ shop, menuItems }) => (
   <div
     style={{
       backgroundColor: 'white',
@@ -15,6 +15,27 @@ const ShopCard = ({ shop }) => (
     <p><strong>予算:</strong> {shop.budget.name}</p>
     <p><strong>住所:</strong> {shop.address}</p>
     <p><strong>営業時間:</strong> {shop.open}</p>
+    
+    {menuItems && menuItems.length > 0 && (
+      <div style={{ marginTop: '20px' }}>
+        <h3 style={{ color: '#2c3e50', marginBottom: '10px' }}>メニュー</h3>
+        <div style={{ display: 'grid', gap: '10px' }}>
+          {menuItems.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                padding: '10px',
+                backgroundColor: '#f8f9fa',
+                borderRadius: '4px',
+              }}
+            >
+              <p style={{ margin: '0' }}><strong>{item.name}</strong></p>
+              {item.price && <p style={{ margin: '5px 0 0 0' }}>¥{item.price}</p>}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
   </div>
 );
 
