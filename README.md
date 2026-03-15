@@ -115,17 +115,17 @@ Node.jsサーバーがHotPepper APIを呼び出す
 
 testCafe
 │
-├── client/ # フロントエンド（React）
-│ ├── src/
-│ │ ├── components/ # UIコンポーネント
-│ │ ├── App.js # メイン画面
-│ │ └── index.js # Reactエントリーポイント
-│
-├── server/ # バックエンド（Node.js + Express）
-│ └── app.js # APIサーバー
-│
-├── node_modules/
-└── package.json
+├── client/ # フロントエンド（React）  
+│ ├── src/  
+│ │ ├── components/ # UIコンポーネント  
+│ │ ├── App.js # メイン画面  
+│ │ └── index.js # Reactエントリーポイント  
+│  
+├── server/ # バックエンド（Node.js + Express）  
+│ └── app.js # APIサーバー  
+│  
+├── node_modules/  
+└── package.json  
 
 
 ### client
@@ -176,3 +176,27 @@ npm run dev
 
 
 
+1 ユーザーがカフェをクリック
+2 React Routerで詳細ページへ
+3 サーバーAPIから詳細データ取得
+4 UIに表示
+
+- Reactコンポーネントを分割してUIの再利用性を高めた
+- APIキーをサーバー側で管理
+- フロントエンドとバックエンドを分離した構成
+
+┌─────────┐
+│ Browser │
+└────┬────┘
+     ↓
+┌─────────┐
+│  React  │
+└────┬────┘
+     ↓
+┌─────────┐
+│ Node.js │
+└────┬────┘
+     ↓
+┌──────────────┐
+│ HotPepper API│
+└──────────────┘
