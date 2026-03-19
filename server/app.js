@@ -1,3 +1,7 @@
+// server/app.js
+require('dotenv').config({ path: './server/.env' });
+// console.log(process.env.TEST);
+
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -72,6 +76,55 @@ app.get('/api/scrape-menu', async (req, res) => {
   } catch (error) {
     console.error('Scraping error:', error);
     res.status(500).json({ error: 'Failed to scrape menu' });
+  }
+});
+
+// 近くの観光地取得（OpenTripMap）
+app.get("/api/nearby", async (req, res) => {
+  try {
+    const { lat, lng } = req.query;
+
+    if (!lat || !lng) {
+      return res.status(400).json({ error: "lat/lng required" });
+    }
+
+    const apiKey = process.env.OPENTRIP_API_KEY;
+    const rad = 3000; // 半径3km
+
+    if (!apiKey) {
+      console.error("APIキーが読み込めてない");
+      return res.status(500).json({ error: "APIキー未設定" });
+    }
+
+    const url = `https://api.opentripmap.com/0.1/en/places/radius?radius=${rad}&lon=${lng}&lat=${lat}&format=json&apikey=${apiKey}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log("OpenTripMap raw:", data); // ←デバッグ
+
+    // ❗ エラーレスポンス対応
+    if (!response.ok) {
+      console.error("OpenTripMapエラー:", data);
+      return res.status(500).json({ error: "OpenTripMap failed", detail: data });
+    }
+
+    // ❗ 配列チェック
+    if (!Array.isArray(data)) {
+      console.error("配列じゃない:", data);
+      return res.status(500).json({ error: "データ形式異常", detail: data });
+    }
+
+    // 正常処理
+    const spots = data
+      .filter(spot => spot.name && spot.name !== "")
+      .slice(0, 3);
+
+    res.json(spots);
+
+  } catch (error) {
+    console.error("OpenTripMap error:", error);
+    res.status(500).json({ error: "Failed to fetch nearby spots" });
   }
 });
 

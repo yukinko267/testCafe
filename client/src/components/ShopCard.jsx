@@ -1,8 +1,8 @@
 import "./ShopCard.css";
 
-function ShopCard({ shop }) {
+function ShopCard({ shop, onClick }) {
   return (
-    <div className="shop-card">
+    <div className="shop-card" onClick={onClick} style={{ cursor: "pointer" }}>
 
       <img
         className="shop-image"
@@ -26,6 +26,7 @@ function ShopCard({ shop }) {
           href={shop.urls.pc}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()} // ←これ重要
         >
           ホットペッパーで見る →
         </a>
