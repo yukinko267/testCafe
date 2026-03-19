@@ -26,7 +26,7 @@ app.get('/api/hotpepper', async (req, res) => {
     const { budget } = req.query;
 
     const params = new URLSearchParams({
-      key: '52b91f15b1d55058',
+      key: process.env.HotPepper_API_KEY,
       large_area: 'Z063',
       range: '5',
       count: '100',

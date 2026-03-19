@@ -25,14 +25,12 @@ function App() {
     setNearbySpots([]);
   };
 
-  // ★ 修正版（ログ＋安全処理）
   const handleShopClick = async (shop) => {
     console.log("クリックされた:", shop);
 
     const lat = parseFloat(shop.lat);
     const lng = parseFloat(shop.lng);
 
-    // ← ここ超重要
     if (!lat || !lng) {
       console.error("緯度経度が取得できてない", shop);
       return;
