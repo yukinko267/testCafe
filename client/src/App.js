@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     const fetchShops = async () => {
-      const res = await fetch("http://localhost:5000/api/hotpepper");
+      const res = await fetch("https://cafesearchishikawa.onrender.com/api/hotpepper");
       const data = await res.json();
       setShops(data.results.shop);
     };
@@ -38,7 +38,7 @@ function App() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/nearby?lat=${lat}&lng=${lng}`
+        `https://cafesearchishikawa.onrender.com/api/nearby?lat=${lat}&lng=${lng}`
       );
 
       const data = await res.json();
