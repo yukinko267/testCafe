@@ -49,13 +49,13 @@ OpenTripMap API
 ## ディレクトリ構成
 
 testCafe  
-├── client/ # フロントエンド（React）  
+├── client/ フロントエンド（React）  
 │ ├── src/  
 │ │ ├── components/  
 │ │ ├── App.js  
 │ │ └── index.js  
 │  
-├── server/ # バックエンド（Express）  
+├── server/ バックエンド（Express）  
 │ └── app.js  
 │  
 ├── node_modules/  
